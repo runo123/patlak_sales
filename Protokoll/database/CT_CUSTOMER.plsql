@@ -17,6 +17,18 @@ EXECUTE IMMEDIATE 'CREATE TABLE CUSTOMER
   
 end if;
 
+SELECT count(*) into v_tabcnt
+from all_sequences
+where sequence_name = 'CUSTOMERS_SEQ' and sequence_owner = USER;
+
+if v_tabcnt = 0 then
+EXECUTE IMMEDIATE 'CREATE SEQUENCE customers_seq
+                   START WITH     100000
+                   INCREMENT BY   2
+                   CACHE 20';
+                   COMMIT;
+                   end if;
+
 END CT_CUSTOMER;
 
 
